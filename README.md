@@ -6,6 +6,8 @@ This is a *different* kind of toolkit ... there's no source to include.
 
 Instead, there's a description of each function, what it does, and then a multi and one line version of it for you to put into your code.
 
+> Note: The one-line version is intentionally *not* "minified" or obfuscated ... it's intended to be a readable variation of the multi-line that fits in one line.
+
 Let's get started
 
 # when
@@ -31,5 +33,22 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
 
 ## Implementation
 
+### Multi-line
 
+    function when(lib) {
+      var _cb, _ival = setInterval(function(){
 
+        if(self[lib]) {
+          _cb();
+          clearInterval(_ival);
+        }
+      }, 20);
+
+      return {
+        run: function(cb) { _cb = cb; }
+      }
+    }
+
+### Single-line
+
+    function when(lib) { var _cb; var _ival = setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return { run: function(cb) { _cb = cb; } } }
