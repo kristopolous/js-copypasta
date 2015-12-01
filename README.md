@@ -51,7 +51,7 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
 
 ### Single-line
 
-    function when(lib) { var _cb; var _ival = setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return { run: function(cb) { _cb = cb; } } }
+    function when(lib){ var _cb, _ival=setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return{ run: function(cb) { _cb=cb; } } }
 
  
 function multi() {
@@ -89,3 +89,25 @@ The `arguments` and `this` pointer are of course maintained.
 ## Implementation
 
 ### Multi-line
+
+    function multi() {
+      var _list = [], _invoke = function() {
+        var _args = arguments, _this = this;
+
+        _list.forEach(function(cb) {
+          cb.apply(this, _args);
+        }, _this);
+      }
+
+      _invoke.add = function(cb) {
+        _list.push(cb);
+        return _invoke;
+      }
+
+      return _invoke;
+    }
+
+### Single-line
+
+    function multi(){var list=[], invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){cb.apply(this, _args);}, _this );}  _invoke.add=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
+
