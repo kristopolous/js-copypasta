@@ -52,3 +52,40 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
 ### Single-line
 
     function when(lib) { var _cb; var _ival = setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return { run: function(cb) { _cb = cb; } } }
+
+ 
+function multi() {
+  var _list = [], _invoke = function() {
+    for(var ix = 0; ix < _list.
+  }
+  _invoke.add = function() {
+    _list = _list.concat(arguments);
+  }
+  return _invoke;
+}
+
+# multi
+
+## Purpose
+Some libraries don't allow an easy way to specify an `Array` of callbacks as opposed to just one.  `multi` allows any number of functions to be glued together and executed in sequence
+
+## Example Usage
+Pretend you have some old crufty code that wants you to specify things like this:
+
+    flashObject.onclick = fn0;
+
+But you also want it to run fn1, fn2, and fn3.
+
+With multi you can do this like so:
+
+    var fn_wrap = multi();
+
+    fn_wrap.add(fn0).add(fn1).add(fn2).add(fn3);
+
+    flashObject.onclick = fn_wrap;
+
+The `arguments` and `this` pointer are of course maintained.
+
+## Implementation
+
+### Multi-line
