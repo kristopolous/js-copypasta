@@ -54,16 +54,6 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
     function when(lib){ var _cb, _ival=setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return{ run: function(cb) { _cb=cb; } } }
 
  
-function multi() {
-  var _list = [], _invoke = function() {
-    for(var ix = 0; ix < _list.
-  }
-  _invoke.add = function() {
-    _list = _list.concat(arguments);
-  }
-  return _invoke;
-}
-
 # multi
 
 ## Purpose
