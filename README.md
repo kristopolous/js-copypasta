@@ -8,6 +8,8 @@ Instead, there's a description of each function, what it does, and then a multi 
 
 > Note: The one-line version is intentionally *not* "minified" or obfuscated ... it's intended to be a readable variation of the multi-line that fits in one line.
 
+** Every helper is self-contained. No function depends on any other function in the 'library.' **
+
 Let's get started
 
 # when
