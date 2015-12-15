@@ -104,13 +104,15 @@ The `arguments` and `this` pointer are of course maintained.
     function multi(){var list=[], invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){cb.apply(this, _args);}, _this );}  _invoke.add=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
 
 
-function runonce(fn) {
-  runonce[fn] = fn;
+function once(fn) {
+  once[fn] = self[fn];
   self[fn] = function() {
-    if(!('once' in fn)) { 
+    if(!fn.hasOwnProperty('once')) { 
       fn.once = fn.apply(this, arguments);
     }
     return fn.once;
   }
+  fn = once[fn];
+  return fn;
 }
 
