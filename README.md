@@ -104,15 +104,24 @@ The `arguments` and `this` pointer are of course maintained.
     function multi(){var list=[], invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){cb.apply(this, _args);}, _this );}  _invoke.add=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
 
 
-function once(fn) {
-  once[fn] = self[fn];
-  self[fn] = function() {
-    if(!fn.hasOwnProperty('once')) { 
-      fn.once = fn.apply(this, arguments);
+# once
+
+## Purpose
+Sometimes there's bad code that runs a function many times and you want some bandaid that makes it only run once.  There's
+too many other things you'll break if you try to "refactor" the "masterpiece" in front of you.
+
+
+### Multi-line
+
+  function once(fn) {
+    var _fn = self[fn];
+    once[fn] = _fn;
+
+    return self[fn] = function() {
+      if(!_fn.hasOwnProperty('once')) { 
+        _fn.once = _fn.apply(this, arguments);
+      }
+      return _fn.once;
     }
-    return fn.once;
   }
-  fn = once[fn];
-  return fn;
-}
 
