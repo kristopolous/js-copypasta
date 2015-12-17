@@ -110,6 +110,12 @@ The `arguments` and `this` pointer are of course maintained.
 Sometimes there's bad code that runs a function many times and you want some bandaid that makes it only run once.  There's
 too many other things you'll break if you try to "refactor" the "masterpiece" in front of you.
 
+`once()` permits that function to only run one time. It has the assumption that 
+
+ * `fn.once` is not defined
+ * The function's scope is `self[fn]`
+
+In practice, these are generally pretty safe assumptions in instances where this functionality is necessary.
 
 ### Multi-line
 
