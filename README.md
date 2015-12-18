@@ -117,17 +117,36 @@ too many other things you'll break if you try to "refactor" the "masterpiece" in
 
 In practice, these are generally pretty safe assumptions in instances where this functionality is necessary.
 
+
+## Example Usage
+Pretend you have an ajax call that doesn't have any immediately UI feedback (there's a very fancy name for this that the
+front-end 'frameworks' like to use to make themselves look like they are super smart...).  
+
+Anyway, so you have a button that the user will click like 4 or 5 times getting no UI feedback and thus posts a bunch
+of times ... yeah, we've all been there.  Here's how you fix that here:
+
+Run this:
+
+  once("email_ten_thousand_people");
+
+And then it will "wrap" the actual implementation in a function that makes sure it doesn't get run more than once. You'll
+see in the multi-line below.  There's a [magical regex](http://stackoverflow.com/questions/2648293/javascript-get-function-name) that once *could* use to remove the requirement of the quotations, but that makes the implementation harder to understand
+for future you and in violation of the principle of this library.  However, feel free to put that check in if you want.
+
 ### Multi-line
 
-  function once(fn) {
-    var _fn = self[fn];
-    once[fn] = _fn;
+    function once(fn) {
+      var _fn = once[fn] = self[fn];
 
-    return self[fn] = function() {
-      if(!_fn.hasOwnProperty('once')) { 
-        _fn.once = _fn.apply(this, arguments);
+      return self[fn] = function() {
+        if(!_fn.hasOwnProperty('once')) { 
+          _fn.once = _fn.apply(this, arguments);
+        }
+        return _fn.once;
       }
-      return _fn.once;
     }
-  }
 
+
+### Single-line
+
+    function once(fn){var _fn=once[fn]=self[fn]; return self[fn]=function(){if(!_fn.hasOwnProperty('once')){ _fn.once=_fn.apply(this, arguments);} return _fn.once;} }
