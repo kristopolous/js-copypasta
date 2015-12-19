@@ -127,7 +127,7 @@ of times ... yeah, we've all been there.  Here's how you fix that here:
 
 Run this:
 
-  once("email_ten_thousand_people");
+    once("email_ten_thousand_people");
 
 And then it will "wrap" the actual implementation in a function that makes sure it doesn't get run more than once. You'll
 see in the multi-line below.  There's a [magical regex](http://stackoverflow.com/questions/2648293/javascript-get-function-name) that once *could* use to remove the requirement of the quotations, but that makes the implementation harder to understand
@@ -136,7 +136,7 @@ for future you and in violation of the principle of this library.  However, feel
 ### Multi-line
 
     function once(fn) {
-      var _fn = once[fn] = self[fn];
+      var _fn = self[fn];
 
       return self[fn] = function() {
         if(!_fn.hasOwnProperty('once')) { 
@@ -149,4 +149,4 @@ for future you and in violation of the principle of this library.  However, feel
 
 ### Single-line
 
-    function once(fn){var _fn=once[fn]=self[fn]; return self[fn]=function(){if(!_fn.hasOwnProperty('once')){ _fn.once=_fn.apply(this, arguments);} return _fn.once;} }
+    function once(fn){var _fn=self[fn]; return self[fn]=function(){if(!_fn.hasOwnProperty('once')){ _fn.once=_fn.apply(this, arguments);} return _fn.once;} }
