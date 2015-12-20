@@ -139,14 +139,12 @@ for future you and in violation of the principle of this library.  However, feel
       var _fn = self[fn];
 
       return self[fn] = function() {
-        if(!_fn.hasOwnProperty('once')) { 
-          _fn.once = _fn.apply(this, arguments);
-        }
-        return _fn.once;
-      }
+        self[fn] = function() { return _fn; };
+        return _fn = _fn.apply(this, arguments);
+      };
     }
 
 
 ### Single-line
 
-    function once(fn){var _fn=self[fn]; return self[fn]=function(){if(!_fn.hasOwnProperty('once')){ _fn.once=_fn.apply(this, arguments);} return _fn.once;} }
+    function once(fn){var _fn=self[fn]; return self[fn]=function(){self[fn]=function(){return _fn;}; return _fn=_fn.apply(this, arguments);}; }
