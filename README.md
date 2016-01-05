@@ -62,6 +62,9 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
 Some libraries don't allow an easy way to specify an `Array` of callbacks as opposed to just one.  `multi` allows any number of functions to be glued together and executed in sequence
 
 ## Example Usage
+
+### Style 1
+
 Pretend you have some old crufty code that wants you to specify things like this:
 
     flashObject.onclick = fn0;
@@ -78,12 +81,22 @@ With multi you can do this like so:
 
 The `arguments` and `this` pointer are of course maintained.
 
+### Style 2
+
+There's a short-hand style here too, given the fact that the initial list comes from the arguments
+passed into the function.  This means that you can also invoke it like so:
+
+    flashObject.onclick = multi(fn0, fn1, nf2, fn3);
+
+And get the same outcome.
+
 ## Implementation
 
 ### Multi-line
 
     function multi() {
-      var _list = [], _invoke = function() {
+      var _list = Array.prototype.slice.call(arguments),
+        _invoke = function() {
         var _args = arguments, _this = this;
 
         _list.forEach(function(cb) {
@@ -101,7 +114,7 @@ The `arguments` and `this` pointer are of course maintained.
 
 ### Single-line
 
-    function multi(){var list=[], invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){cb.apply(this, _args);}, _this );}  _invoke.add=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
+    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){cb.apply(this, _args);}, _this );}  _invoke.add=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
 
 
 # once
