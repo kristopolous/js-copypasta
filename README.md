@@ -95,19 +95,20 @@ And get the same outcome.
 ### Multi-line
 
     function multi() {
-      var _list = Array.prototype.slice.call(arguments),
+      var 
+        _list = Array.prototype.slice.call(arguments),
         _invoke = function() {
-        var _args = arguments, _this = this;
+          var _args = arguments, _this = this;
 
-        _list.forEach(function(cb) {
-          cb.apply(this, _args);
-        }, _this);
-      }
+          _list.forEach(function(cb) {
+            cb.apply(this, _args);
+          }, _this);
+        };
 
       _invoke.add = function(cb) {
         _list.push(cb);
         return _invoke;
-      }
+      };
 
       return _invoke;
     }
