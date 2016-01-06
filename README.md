@@ -56,6 +56,36 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
     function when(lib){ var _cb, _ival=setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return{ run: function(cb) { _cb=cb; } } }
 
  
+# req
+
+## Purpose
+Similar to an amd require, this is a really light library that will load some js, given that it's not loaded before.
+
+## Example Usage
+
+Pretend you have a debug library you want to pull in before running some code.  You know that when it's loaded
+it will define `dbg` in the global namespace.  Pretend the code is at `//example.com/dbg.js`.
+
+    req('//example.com/dbg.js', 'dbg', function() { ... });
+
+Yes there are very cathedral ways of doing this ... but that's not the point of this ... here's the snippet.
+
+## Implementation
+
+### Multi-line
+
+function req(url, obj, cb) {
+  if(!req[url]) { 
+    req[url] = document.body.appendChild(document.createElement('script')).src = url;
+  }
+  var _ival = setInterval(function(){
+    if(self[obj]) {
+      cb();
+      clearInterval(_ival);
+    }
+  }, 20);
+}
+
 # multi
 
 ## Purpose
