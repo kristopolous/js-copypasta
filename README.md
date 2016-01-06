@@ -68,23 +68,27 @@ it will define `dbg` in the global namespace.  Pretend the code is at `//example
 
     req('//example.com/dbg.js', 'dbg', function() { ... });
 
-Yes there are very cathedral ways of doing this ... but that's not the point of this ... here's the snippet.
+There are very cathedral ways of doing this ... but let's not do that.
 
 ## Implementation
 
 ### Multi-line
 
-function req(url, obj, cb) {
-  if(!req[url]) { 
-    req[url] = document.body.appendChild(document.createElement('script')).src = url;
-  }
-  var _ival = setInterval(function(){
-    if(self[obj]) {
-      cb();
-      clearInterval(_ival);
+    function req(url, obj, cb) {
+      req[url] = req[url] || (document.body.appendChild(document.createElement('script')).src = url);
+
+      var _ival = setInterval(function(){
+        if(self[obj]) {
+          cb(obj);
+          clearInterval(_ival);
+        }
+      }, 20);
     }
-  }, 20);
-}
+
+### Single-line
+
+    function req(url, obj, cb){ req[url]=req[url] || (document.body.appendChild(document.createElement('script')).src=url); var _ival=setInterval(function() { if(self[obj]){ cb(obj); clearInterval(_ival); } }, 20); }
+
 
 # multi
 
