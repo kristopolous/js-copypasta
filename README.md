@@ -41,7 +41,7 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
 
 ## Implementation
 
-### Multi-line
+**Multi-line**
 
     function when(lib) {
       var _cb, _ival = setInterval(function(){
@@ -57,7 +57,7 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
       }
     }
 
-### Single-line
+**Single-line**
 
     function when(lib){ var _cb, _ival=setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return{ run: function(cb) { _cb=cb; } } }
 
@@ -78,7 +78,7 @@ There are very cathedral ways of doing this ... but let's not do that.
 
 ## Implementation
 
-### Multi-line
+**Multi-line**
 
     function req(url, obj, cb) {
       req[url] = req[url] || (document.body.appendChild(document.createElement('script')).src = url);
@@ -91,7 +91,7 @@ There are very cathedral ways of doing this ... but let's not do that.
       }, 20);
     }
 
-### Single-line
+**Single-line**
 
     function req(url, obj, cb){ req[url]=req[url] || (document.body.appendChild(document.createElement('script')).src=url); var _ival=setInterval(function() { if(self[obj]){ cb(obj); clearInterval(_ival); } }, 20); }
 
@@ -132,7 +132,7 @@ And get the same outcome.
 
 ## Implementation
 
-### Multi-line
+**Multi-line**
 
     function multi() {
       var 
@@ -153,7 +153,7 @@ And get the same outcome.
       return invoke;
     }
 
-### Single-line
+**Single-line**
 
     function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var args=arguments; list.forEach( function(cb){cb.apply(this, args);}, this);} invoke.add=function(cb){list.push(cb); return invoke;} return invoke;}
 
@@ -181,7 +181,7 @@ Now we'll listen on that
       console.log("the new value of my-input is " + what);
     });
 
-### Multi-line
+**Multi-line**
 
     function chain() {
       var list = Array.prototype.slice.call(arguments);
@@ -194,7 +194,7 @@ Now we'll listen on that
       };
     }
 
-### Single-line
+**Single-line**
 
     function chain(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments; list.forEach( function(cb){args=cb.apply(this, args);}, this);} }
 
@@ -228,7 +228,7 @@ And then it will "wrap" the actual implementation in a function that makes sure 
 see in the multi-line below.  There's a [magical regex](http://stackoverflow.com/questions/2648293/javascript-get-function-name) that once *could* use to remove the requirement of the quotations, but that makes the implementation harder to understand
 for future you and in violation of the principle of this library.  However, feel free to put that check in if you want.
 
-### Multi-line
+**Multi-line**
 
     function once(fn) {
       var _fn = self[fn];
@@ -240,6 +240,6 @@ for future you and in violation of the principle of this library.  However, feel
     }
 
 
-### Single-line
+**Single-line**
 
     function once(fn){var _fn=self[fn]; return self[fn]=function(){self[fn]=function(){return _fn;}; return _fn=_fn.apply(this, arguments);}; }
