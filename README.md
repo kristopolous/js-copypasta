@@ -138,11 +138,11 @@ And get the same outcome.
       var 
         _list = Array.prototype.slice.call(arguments),
         _invoke = function() {
-          var _args = arguments, _this = this;
+          var _args = arguments;
 
           _list.forEach(function(cb) {
-            cb.apply(_this, _args);
-          }, _this);
+            cb.apply(this, _args);
+          }, this);
         };
 
       _invoke.add = function(cb) {
@@ -155,7 +155,7 @@ And get the same outcome.
 
 ### Single-line
 
-    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){cb.apply(_this, _args);}, _this );}  _invoke.add=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
+    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var _args=arguments; _list.forEach( function(cb){cb.apply(this, _args);}, this);} _invoke.add=function(cb){_list.push(cb); return _invoke;} return _invoke;}
 
 
 # chain
@@ -185,18 +185,18 @@ Now we'll listen on that
 
     function chain() {
       var _list = Array.prototype.slice.call(arguments);
-      return  function() {
-        var _args = arguments, _this = this;
+      return function() {
+        var _args = arguments;
 
         _list.forEach(function(cb) {
-          _args = cb.apply(_this, _args);
-        }, _this);
+          _args = cb.apply(this, _args);
+        }, this);
       };
     }
 
 ### Single-line
 
-    function chain(){var _list=Array.prototype.slice.call(arguments); return function(){var _args=arguments, _this=this; _list.forEach( function(cb){_args = cb.apply(_this, _args);}, _this );} }
+    function chain(){var _list=Array.prototype.slice.call(arguments); return function(){var _args=arguments; _list.forEach( function(cb){_args = cb.apply(this, _args);}, this);} }
 
 
 # once
