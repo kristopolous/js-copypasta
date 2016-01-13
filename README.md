@@ -135,7 +135,7 @@ And get the same outcome.
           var _args = arguments, _this = this;
 
           _list.forEach(function(cb) {
-            cb.apply(this, _args);
+            cb.apply(_this, _args);
           }, _this);
         };
 
@@ -149,7 +149,37 @@ And get the same outcome.
 
 ### Single-line
 
-    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){cb.apply(this, _args);}, _this );}  _invoke.add=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
+    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){cb.apply(_this, _args);}, _this );}  _invoke.add=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
+
+
+# chain
+
+Chain is like multi only the return value of each function gets passed through to the next ... this is similar to a middleware in ruby. It's worth noting that there's just a slight change from the multi() above.
+
+### Multi-line
+
+    function multi() {
+      var 
+        _list = Array.prototype.slice.call(arguments),
+        _invoke = function() {
+          var _args = arguments, _this = this;
+
+          _list.forEach(function(cb) {
+            _args = cb.apply(_this, _args);
+          }, _this);
+        };
+
+      _invoke.then = function(cb) {
+        _list.push(cb);
+        return _invoke;
+      };
+
+      return _invoke;
+    }
+
+### Single-line
+
+    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){_args = cb.apply(_this, _args);}, _this );}  _invoke.then=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
 
 
 # once
