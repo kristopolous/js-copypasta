@@ -136,26 +136,26 @@ And get the same outcome.
 
     function multi() {
       var 
-        _list = Array.prototype.slice.call(arguments),
-        _invoke = function() {
-          var _args = arguments;
+        list = Array.prototype.slice.call(arguments),
+        invoke = function() {
+          var args = arguments;
 
-          _list.forEach(function(cb) {
-            cb.apply(this, _args);
+          list.forEach(function(cb) {
+            cb.apply(this, args);
           }, this);
         };
 
-      _invoke.add = function(cb) {
-        _list.push(cb);
-        return _invoke;
+      invoke.add = function(cb) {
+        list.push(cb);
+        return invoke;
       };
 
-      return _invoke;
+      return invoke;
     }
 
 ### Single-line
 
-    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var _args=arguments; _list.forEach( function(cb){cb.apply(this, _args);}, this);} _invoke.add=function(cb){_list.push(cb); return _invoke;} return _invoke;}
+    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var args=arguments; list.forEach( function(cb){cb.apply(this, args);}, this);} invoke.add=function(cb){list.push(cb); return invoke;} return invoke;}
 
 
 # chain
@@ -184,19 +184,19 @@ Now we'll listen on that
 ### Multi-line
 
     function chain() {
-      var _list = Array.prototype.slice.call(arguments);
+      var list = Array.prototype.slice.call(arguments);
       return function() {
-        var _args = arguments;
+        var args = arguments;
 
-        _list.forEach(function(cb) {
-          _args = cb.apply(this, _args);
+        list.forEach(function(cb) {
+          args = cb.apply(this, args);
         }, this);
       };
     }
 
 ### Single-line
 
-    function chain(){var _list=Array.prototype.slice.call(arguments); return function(){var _args=arguments; _list.forEach( function(cb){_args = cb.apply(this, _args);}, this);} }
+    function chain(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments; list.forEach( function(cb){args=cb.apply(this, args);}, this);} }
 
 
 # once
