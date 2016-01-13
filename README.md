@@ -154,7 +154,26 @@ And get the same outcome.
 
 # chain
 
+## Purpose
+
 Chain is like multi only the return value of each function gets passed through to the next ... this is similar to a middleware in ruby. It's worth noting that there's just a slight change from the multi() above.
+
+## Example Usage
+
+Pretend you needed to do some processing on something before passing it on to the next function.  For instance, say you are listening to a dom node and then want the value to be passed through to the lower function.  We'll start with a wrapper.
+
+    function on_change(dom_node, user_defined_cb) {
+      $(dom_node).change(chain(
+        function() { return this.value; },
+        user_defined_cb
+      ));
+    }
+
+Now we'll listen on that
+
+    on_change('#my-input', function(what) { 
+      console.log("the new value of my-input is " + what);
+    });
 
 ### Multi-line
 
