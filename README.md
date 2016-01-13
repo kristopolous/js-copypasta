@@ -103,8 +103,6 @@ Some libraries don't allow an easy way to specify an `Array` of callbacks as opp
 
 ## Example Usage
 
-### Style 1
-
 Pretend you have some old crufty code that wants you to specify things like this:
 
     flashObject.onclick = fn0;
@@ -113,50 +111,29 @@ But you also want it to run fn1, fn2, and fn3.
 
 With multi you can do this like so:
 
-    var fn_wrap = multi();
-
-    fn_wrap.add(fn0).add(fn1).add(fn2).add(fn3);
-
-    flashObject.onclick = fn_wrap;
+    flashObject.onclick = multi(
+      fn0, fn1, fn2, fn3);
 
 The `arguments` and `this` pointer are of course maintained.
-
-### Style 2
-
-There's a short-hand style here too, given the fact that the initial list comes from the arguments
-passed into the function.  This means that you can also invoke it like so:
-
-    flashObject.onclick = multi(fn0, fn1, nf2, fn3);
-
-And get the same outcome.
 
 ## Implementation
 
 **Multi-line**
 
     function multi() {
-      var 
-        list = Array.prototype.slice.call(arguments),
-        invoke = function() {
-          var args = arguments;
+      var list = Array.prototype.slice.call(arguments);
+      return function() {
+        var args = arguments;
 
-          list.forEach(function(cb) {
-            cb.apply(this, args);
-          }, this);
-        };
-
-      invoke.add = function(cb) {
-        list.push(cb);
-        return invoke;
+        list.forEach(function(cb) {
+          cb.apply(this, args);
+        }, this);
       };
-
-      return invoke;
     }
 
 **Single-line**
 
-    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var args=arguments; list.forEach( function(cb){cb.apply(this, args);}, this);} invoke.add=function(cb){list.push(cb); return invoke;} return invoke;}
-
+    function multi(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments; list.forEach( function(cb){cb.apply(this, args);}, this);} }
 
 # chain
 
