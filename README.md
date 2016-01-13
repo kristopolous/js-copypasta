@@ -183,28 +183,20 @@ Now we'll listen on that
 
 ### Multi-line
 
-    function multi() {
-      var 
-        _list = Array.prototype.slice.call(arguments),
-        _invoke = function() {
-          var _args = arguments, _this = this;
+    function chain() {
+      var _list = Array.prototype.slice.call(arguments);
+      return  function() {
+        var _args = arguments, _this = this;
 
-          _list.forEach(function(cb) {
-            _args = cb.apply(_this, _args);
-          }, _this);
-        };
-
-      _invoke.then = function(cb) {
-        _list.push(cb);
-        return _invoke;
+        _list.forEach(function(cb) {
+          _args = cb.apply(_this, _args);
+        }, _this);
       };
-
-      return _invoke;
     }
 
 ### Single-line
 
-    function multi(){var list=Array.prototype.slice.call(arguments), invoke=function(){var _args=arguments, _this=this; _list.forEach( function(cb){_args = cb.apply(_this, _args);}, _this );}  _invoke.then=function(cb){_list.push(cb); return _invoke;}  return _invoke;}
+    function chain(){var _list=Array.prototype.slice.call(arguments); return function(){var _args=arguments, _this=this; _list.forEach( function(cb){_args = cb.apply(_this, _args);}, _this );} }
 
 
 # once
