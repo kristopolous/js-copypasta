@@ -22,11 +22,9 @@ Let's get started
 # addTrigger
 
 ## Purpose
-This is similar to a `$(document).ready` in jQuery.  This is important because many libraries and roll-your-owns do it wrong.
+This is similar to a `$(document).ready` in jQuery.  This author has seen many DIY implementations with subtle timing bugs.
 
-For instance, this was recently (Feb 2016) found in Volusion code (irrelevant parts removed)
-
-      var volusionDocReadyMethods = [];
+For instance, here is one recently (Feb 2016) found in Volusion:
 
       function volusionDocReady(callback) {
         volusionDocReadyMethods.push(callback);
@@ -39,12 +37,12 @@ For instance, this was recently (Feb 2016) found in Volusion code (irrelevant pa
       });
 
       return {
-        ready: volusionDocReady;
+        ready: volusionDocReady
       };
 
-This code, which is an honest attempt, has a crucial error that leads to things sometimes not working.  
+This code has a crucial error that leads to things sometimes not working.  
 
-To understand the bug, let's look at the usage of this library where this invocation exists (called CB henceforth):
+To understand the bug, let's look at a usage of this library where this invocation exists (called CB henceforth):
 
       $(document).ready(function(){
         volusion.ready(function () { <<-- CB
@@ -64,24 +62,25 @@ Let's state what this code does:
 Therefore, CB can register AFTER the methods are called, and
 thus is never run.
 
-This is where honest and well-intended implementations of `.ready()` can break as I saw for a client I was working with.
+This is where honest and well-intended implementations of `.ready()` can break as seen for a client of mine.
+
+Some could blame the implementer of CB as the culprit here.
+
+However, wouldn't it be better if the `.ready()` implementation was robust enough to not take issue with this? Fragile foundations are hardly worth using at all.  Let's do better.
 
 ## Example Usage
 
-Since I've seen similar attempts at one-off multiple-dispatch like this before, I thought it would be good to have something
-that can be placed upon existing singletons (or global objects -- however you want to call them).
-
-So a generic trigger system 
+`addTrigger` can be placed upon existing singletons (or global objects -- however you want to call them):
 
     addTrigger('ready', object);
 
-Which can be composed pretty easily:
+This can be composed pretty easily to our `.ready()` implementation above.
 
     function addReady(object) { return addTrigger('ready', object); }
 
-This also allows multiple triggers to exist.  Perhaps you want `onLogin` or something else.
+The genericity of this, allows multiple triggers to exist.  So you could have `.onLogin` and `.ready` or something else.
 
-When you want to execute the code, call it without a function argument.
+When you want to execute the code, call the named function without a callback function argument.
 
 For instance, in our above example we could have turned the first block of code into this:
 
@@ -92,7 +91,9 @@ Then
 
     volusion.ready( ... );
 
-While avoiding the bugs above.
+While avoiding the timing bugs.
+
+Here it is, with no dependencies or demands, frameworks or funk in a single line of code.
 
 ## Implementation
 
