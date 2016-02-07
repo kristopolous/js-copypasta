@@ -112,6 +112,10 @@ While avoiding the bugs above.
       }
     }
 
+**Single-line**
+
+    function addTrigger(name, object){ var stack=[]; object[name]=function(arg){ if(arg && arg.call && arg.apply){ return stack===null ? arg():stack.push(arg); } while(stack.length){ stack.shift()(); } stack=null; } }
+
 # when
 
 ## Purpose 
