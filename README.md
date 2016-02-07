@@ -19,6 +19,53 @@ Let's get started
   * chain - cascades the return values of multiple functions with a single assignment
   * once - makes sure that a function is run only once
 
+# ready
+
+## Purpose
+This is similar to a `$(document).ready` in jQuery.  This is important because many libraries and roll-your-owns do it wrong.
+
+For instance, this was recently (Feb 2016) found in Volusion code (irrelevant parts removed)
+
+      var volusionDocReadyMethods = [];
+
+      function volusionDocReady(callback) {
+        volusionDocReadyMethods.push(callback);
+      }
+
+      $(function() {
+        $.each(volusionDocReadyMethods, function (index, volusionDocReadyMethod) {
+          volusionDocReadyMethod();
+        });
+      });
+
+      return {
+        ready: volusionDocReady;
+      };
+
+This code, which is an honest attempt, has a crucial error that leads to things sometimes not working.  
+
+To understand the bug, let's look at the usage of this library where this invocation exists (called CB henceforth):
+
+      $(document).ready(function(){
+        volusion.ready(function () { <<-- CB
+          ...
+        });
+      });
+
+To understand the bug you have to understand the timelines
+of possible execution.
+
+Let's state what this code does:
+
+ * CB is always added to `volusionDocReadyMethods`
+ * The members of `volusionDocReadyMethods` always get called
+ * BUT CB is NOT always added BEFORE the methods get called.
+
+Therefore, CB can register AFTER the methods are called, and
+thus is never run.
+
+This is where honest and well-intended implementations of `.ready()` can break.
+
 # when
 
 ## Purpose 
