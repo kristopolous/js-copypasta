@@ -81,9 +81,36 @@ Which can be composed pretty easily:
 
 This also allows multiple triggers to exist.  Perhaps you want `onLogin` or something else.
 
+When you want to execute the code, call it without a function argument.
+
+For instance, in our above example we could have turned the first block of code into this:
+
+    addTrigger('ready', volusion);
+    $(volusion.ready);
+
+Then
+
+    volusion.ready( ... );
+
+While avoiding the bugs above.
+
 ## Implementation
 
 **Multi-line**
+
+    function addTrigger(name, object) {
+      var stack = [];
+
+      object[name] = function(arg) {
+        if(arg && arg.call && arg.apply) { 
+          return stack === null ? arg() : stack.push(arg);
+        } 
+        while(stack.length) {
+          stack.shift()();
+        }
+        stack = null;
+      }
+    }
 
 # when
 
