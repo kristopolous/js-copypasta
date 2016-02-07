@@ -12,14 +12,14 @@ Instead, there's a description of each function, what it does, and then a multi 
 
 Let's get started
 
-  * ready - a module that can add ".ready" to an object
+  * addTrigger - a module that can add ".ready" to an object
   * when - runs a block of code when a global is defined
   * req - loads a script and then runs a when 
   * multi - runs multiple functions through a single assignment
   * chain - cascades the return values of multiple functions with a single assignment
   * once - makes sure that a function is run only once
 
-# ready
+# addTrigger
 
 ## Purpose
 This is similar to a `$(document).ready` in jQuery.  This is important because many libraries and roll-your-owns do it wrong.
@@ -64,7 +64,26 @@ Let's state what this code does:
 Therefore, CB can register AFTER the methods are called, and
 thus is never run.
 
-This is where honest and well-intended implementations of `.ready()` can break.
+This is where honest and well-intended implementations of `.ready()` can break as I saw for a client I was working with.
+
+## Example Usage
+
+Since I've seen similar attempts at one-off multiple-dispatch like this before, I thought it would be good to have something
+that can be placed upon existing singletons (or global objects -- however you want to call them).
+
+So a generic trigger system 
+
+    addTrigger('ready', object);
+
+Which can be composed pretty easily:
+
+    function addReady(object) { return addTrigger('ready', object); }
+
+This also allows multiple triggers to exist.  Perhaps you want `onLogin` or something else.
+
+## Implementation
+
+**Multi-line**
 
 # when
 
