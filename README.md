@@ -175,12 +175,15 @@ it will define `dbg` in the global namespace.  Pretend the code is at `//example
 
 There are very cathedral ways of doing this ... but let's not do that.
 
+Also note that this method won't load a script if the object you are looking for is defined.  If the functionality was
+brought in elsewhere, this thing isn't stupid enough that it needs its own copy to consider it "loaded".
+
 ## Implementation
 
 **Multi-line**
 
     function req(url, obj, cb) {
-      req[url] = req[url] || (document.body.appendChild(document.createElement('script')).src = url);
+      req[url] = self[obj] || req[url] || (document.body.appendChild(document.createElement('script')).src = url);
 
       var _ival = setInterval(function(){
         if(self[obj]) {
@@ -192,7 +195,7 @@ There are very cathedral ways of doing this ... but let's not do that.
 
 **Single-line**
 
-    function req(url, obj, cb){ req[url]=req[url] || (document.body.appendChild(document.createElement('script')).src=url); var _ival=setInterval(function() { if(self[obj]){ cb(obj); clearInterval(_ival); } }, 20); }
+    function req(url, obj, cb){ req[url]=self[obj] || req[url] || (document.body.appendChild(document.createElement('script')).src=url); var _ival=setInterval(function() { if(self[obj]){ cb(obj); clearInterval(_ival); } }, 20); }
 
 
 # multi
