@@ -11,7 +11,21 @@ Instead, there's a collection of functions along with their descriptions and imp
 
 > Note 2: This README is valid javascript.  Really, if you want to you can just include it as a script ... that's why the "stray" comments are peppered around. In fact, the test suite includes this readme file.
 
-**Every helper is self-contained. No function depends on any other function in the 'library.'**
+**Every helper is self-contained. No function depends on any other function in the 'library.'**  
+
+This is something I call "low-touch coding" which borrows from the low-touch sales technique.  In low-touch sales you generally leave the customer alone and allow them to make their own decision.  The theory of low-touch is that it leads to fewer issues because you don't
+
+ * cajole customers into an entitlement trap that you have to make good on
+ * need to understand what they are doing or their motivations 
+ * get distracted by things not relating to the sale
+
+Analagously, in low-touch coding, their aren't
+
+ * empty promises of a better 'design' 
+ * assumptions of how the code is (or even worse, should be) written
+ * impositions on any business logic or grand architecture
+
+Low-touch code should be able to drop into the most unmaintainable ill-founded poorly written garbage code and get its job done quickly and effectively without breaking things. Need to get a new feature done quickly on legacy code written by a bunch of drunken monkeys without breaking things? No problem.  That's low touch.
 
 Let's get started
 
