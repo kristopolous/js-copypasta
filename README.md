@@ -15,9 +15,9 @@ Let's get started
   * <a href='#addtrigger'>addTrigger</a> - a module that can add ".ready" to an object
   * <a href='#when'>when</a> - runs a block of code when a global is defined
   * <a href='#req'>req</a> - loads a script and then runs a when 
-  * multi - runs multiple functions through a single assignment
-  * chain - cascades the return values of multiple functions with a single assignment
-  * once - makes sure that a function is run only once
+  * <a href='#multi'>multi</a> - runs multiple functions through a single assignment
+  * <a href='#chain'>chain</a> - cascades the return values of multiple functions with a single assignment
+  * <a href='#once'>once</a> - makes sure that a function is run only once
 
 <a name='addtrigger'></a>
 # addTrigger
