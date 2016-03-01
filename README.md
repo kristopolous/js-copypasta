@@ -54,8 +54,7 @@ To understand the bug, let's look at a usage of this library where this invocati
         });
       });
 
-To understand the bug you have to understand the timelines
-of possible execution.
+Here's the timelines of possible execution.
 
 Let's state what this code does:
 
@@ -74,7 +73,7 @@ However, wouldn't it be better if the `.ready()` implementation was robust enoug
 
 ## Example Usage
 
-`addTrigger` can be placed upon existing singletons (or global objects -- however you want to call them):
+`addTrigger` can be placed upon existing singletons (or global objects - however you want to call them):
 
     addTrigger('ready', object);
 
@@ -112,7 +111,7 @@ Here it is, with no dependencies or demands, frameworks or funk in a single line
           return stack === null ? arg() : stack.push(arg);
         } 
         while(stack.length) {
-          stack.shift()();
+          stack.shift()(arg);
         }
         stack = null;
       }
@@ -120,7 +119,7 @@ Here it is, with no dependencies or demands, frameworks or funk in a single line
 /*
 **Single-line**
 
-    function addTrigger(name, object){ var stack=[]; object[name]=function(arg){ if(arg && arg.call && arg.apply){ return stack===null ? arg():stack.push(arg); } while(stack.length){ stack.shift()(); } stack=null; } }
+    function addTrigger(name, object){ var stack=[]; object[name]=function(arg){ if(arg && arg.call && arg.apply){ return stack===null ? arg():stack.push(arg); } while(stack.length){ stack.shift()(arg); } stack=null; } }
 
 <a name='when'></a>
 # when
@@ -278,17 +277,17 @@ Now we'll listen on that
     function chain() {
       var list = Array.prototype.slice.call(arguments);
       return function() {
-        var args = arguments;
+        var args = arguments[0];
 
         list.forEach(function(cb) {
-          args = cb.apply(this, args);
+          args = cb.call(this, args);
         }, this);
       };
     }
 /*
 **Single-line**
 
-    function chain(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments; list.forEach( function(cb){args=cb.apply(this, args);}, this);} }
+    function chain(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments[0]; list.forEach( function(cb){args=cb.call(this, args);}, this);} }
 
 
 <a name='once'></a>

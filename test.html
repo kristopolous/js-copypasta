@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>QUnit Example</title>
+  <title>js-copy-pasta</title>
   <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-1.22.0.css">
 </head>
 <body>
@@ -13,8 +13,43 @@
   <script src='README.md'></script>
   <script>
 
-  QUnit.test( "hello test", function( assert ) {
-    assert.ok( 1 == "1", "Passed!" );
+  QUnit.test( "addTrigger single function", function( assert ) {
+    var o = {};
+    assert.expect(1);
+    addTrigger('r', o);
+    o.r(function() {
+      assert.ok( 1 == "1", "Passed!" );
+    });
+    o.r();
+  });
+
+  QUnit.test( "multi", function( assert ) {
+    assert.expect(2);
+    function m() {
+      assert.ok( 1 == "1", "Passed!" );
+    }
+    multi(m, m)();
+  });
+
+  QUnit.test( "chain", function( assert ) {
+    assert.expect(2);
+    function a(i) {
+      assert.equal(i, 0, "Passed!" );
+      return 1;
+    }
+    function b(i) {
+      assert.equal(i, 1, "Passed!" );
+    }
+    chain(a, b)(0);
+  })
+
+  QUnit.test( "once", function( assert ) {
+    assert.expect(1);
+    self.m = function () {
+      assert.ok( 1 == "1", "Passed!" );
+    }
+    once('m');
+    m();m();
   });
   </script>
 </body>
