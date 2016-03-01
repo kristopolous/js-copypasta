@@ -1,11 +1,11 @@
 /*
 # Sometimes you just want one isolated function.
 
-Sometimes I find myself writing the same helper functions in situations where I don't want to pull in a library, just put in some really small function.
+I find myself writing the same helper functions in situations where I don't want to pull in a library.
 
-This is a *different* kind of toolkit ... there's no source to include.
+This is a *different* kind of toolkit ... there's no file to download or include.
 
-Instead, there's a description of each function, what it does, and then a multi and one line version of it for you to put into your code.
+Instead, there's a collection of functions along with their descriptions and implementation for you to copy and paste into your code.
 
 > Note 1: The one-line version is intentionally *not* "minified" or obfuscated ... it's intended to be a readable variation of the multi-line that fits in one line.
 
