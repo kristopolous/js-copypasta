@@ -1,3 +1,4 @@
+/*
 # Sometimes you just want one isolated function.
 
 Sometimes I find myself writing the same helper functions in situations where I don't want to pull in a library, just put in some really small function.
@@ -99,7 +100,7 @@ Here it is, with no dependencies or demands, frameworks or funk in a single line
 ## Implementation
 
 **Multi-line**
-
+*/
     function addTrigger(name, object) {
       var stack = [];
 
@@ -113,7 +114,7 @@ Here it is, with no dependencies or demands, frameworks or funk in a single line
         stack = null;
       }
     }
-
+/*
 **Single-line**
 
     function addTrigger(name, object){ var stack=[]; object[name]=function(arg){ if(arg && arg.call && arg.apply){ return stack===null ? arg():stack.push(arg); } while(stack.length){ stack.shift()(); } stack=null; } }
@@ -143,7 +144,7 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
 ## Implementation
 
 **Multi-line**
-
+*/
     function when(lib) {
       var _cb, _ival = setInterval(function(){
 
@@ -157,7 +158,7 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
         run: function(cb) { _cb = cb; }
       }
     }
-
+/*
 **Single-line**
 
     function when(lib){ var _cb, _ival=setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return{ run: function(cb) { _cb=cb; } } }
@@ -184,7 +185,7 @@ brought in elsewhere, this thing isn't stupid enough that it needs its own copy 
 ## Implementation
 
 **Multi-line**
-
+*/
     function req(url, obj, cb) {
       req[url] = self[obj] || req[url] || (document.body.appendChild(document.createElement('script')).src = url);
 
@@ -195,7 +196,7 @@ brought in elsewhere, this thing isn't stupid enough that it needs its own copy 
         }
       }, 20);
     }
-
+/*
 **Single-line**
 
     function req(url, obj, cb){ req[url]=self[obj] || req[url] || (document.body.appendChild(document.createElement('script')).src=url); var _ival=setInterval(function() { if(self[obj]){ cb(obj); clearInterval(_ival); } }, 20); }
@@ -225,7 +226,7 @@ The `arguments` and `this` pointer are of course maintained.
 ## Implementation
 
 **Multi-line**
-
+*/
     function multi() {
       var list = Array.prototype.slice.call(arguments);
       return function() {
@@ -236,7 +237,7 @@ The `arguments` and `this` pointer are of course maintained.
         }, this);
       };
     }
-
+/*
 **Single-line**
 
     function multi(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments; list.forEach( function(cb){cb.apply(this, args);}, this);} }
@@ -266,7 +267,7 @@ Now we'll listen on that
     });
 
 **Multi-line**
-
+*/
     function chain() {
       var list = Array.prototype.slice.call(arguments);
       return function() {
@@ -277,7 +278,7 @@ Now we'll listen on that
         }, this);
       };
     }
-
+/*
 **Single-line**
 
     function chain(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments; list.forEach( function(cb){args=cb.apply(this, args);}, this);} }
@@ -314,7 +315,7 @@ see in the multi-line below.  There's a [magical regex](http://stackoverflow.com
 for future you and in violation of the principle of this library.  However, feel free to put that check in if you want.
 
 **Multi-line**
-
+*/
     function once(fn) {
       var _fn = self[fn];
 
@@ -324,7 +325,8 @@ for future you and in violation of the principle of this library.  However, feel
       };
     }
 
-
+/*
 **Single-line**
 
     function once(fn){var _fn=self[fn]; return self[fn]=function(){self[fn]=function(){return _fn;}; return _fn=_fn.apply(this, arguments);}; }
+*/
