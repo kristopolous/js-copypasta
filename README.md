@@ -147,7 +147,6 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
 ## Implementation
 
 **Multi-line**
-
 */
 
     function when(lib) {
@@ -190,7 +189,6 @@ brought in elsewhere, this thing isn't stupid enough that it needs its own copy 
 ## Implementation
 
 **Multi-line**
-
 */
 
     function req(url, obj, cb) {
@@ -276,6 +274,7 @@ Now we'll listen on that
 
 **Multi-line**
 */
+
     function chain() {
       var list = Array.prototype.slice.call(arguments);
       return function() {
