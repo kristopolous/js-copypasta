@@ -12,13 +12,14 @@ Instead, there's a description of each function, what it does, and then a multi 
 
 Let's get started
 
-  * addTrigger - a module that can add ".ready" to an object
+  * <a href='#addtrigger'>addTrigger</a> - a module that can add ".ready" to an object
   * when - runs a block of code when a global is defined
   * req - loads a script and then runs a when 
   * multi - runs multiple functions through a single assignment
   * chain - cascades the return values of multiple functions with a single assignment
   * once - makes sure that a function is run only once
 
+<a name='addtrigger'></a>
 # addTrigger
 
 ## Purpose
