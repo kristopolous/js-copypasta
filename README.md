@@ -118,6 +118,7 @@ Here it is, with no dependencies or demands, frameworks or funk in a single line
 
     function addTrigger(name, object){ var stack=[]; object[name]=function(arg){ if(arg && arg.call && arg.apply){ return stack===null ? arg():stack.push(arg); } while(stack.length){ stack.shift()(); } stack=null; } }
 
+<a name='when'></a>
 # when
 
 ## Purpose 
@@ -162,6 +163,7 @@ You could either be an "architect" and spend endless hours trying to fix it, or 
     function when(lib){ var _cb, _ival=setInterval(function(){ if(self[lib]) { _cb(); clearInterval(_ival); } }, 20); return{ run: function(cb) { _cb=cb; } } }
 
  
+<a name='req'></a>
 # req
 
 ## Purpose
@@ -199,6 +201,7 @@ brought in elsewhere, this thing isn't stupid enough that it needs its own copy 
     function req(url, obj, cb){ req[url]=self[obj] || req[url] || (document.body.appendChild(document.createElement('script')).src=url); var _ival=setInterval(function() { if(self[obj]){ cb(obj); clearInterval(_ival); } }, 20); }
 
 
+<a name='multi'></a>
 # multi
 
 ## Purpose
@@ -238,6 +241,7 @@ The `arguments` and `this` pointer are of course maintained.
 
     function multi(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments; list.forEach( function(cb){cb.apply(this, args);}, this);} }
 
+<a name='chain'></a>
 # chain
 
 ## Purpose
@@ -279,6 +283,7 @@ Now we'll listen on that
     function chain(){var list=Array.prototype.slice.call(arguments); return function(){var args=arguments; list.forEach( function(cb){args=cb.apply(this, args);}, this);} }
 
 
+<a name='once'></a>
 # once
 
 ## Purpose
