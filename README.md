@@ -54,22 +54,18 @@ To understand the bug, let's look at a usage of this library where this invocati
         });
       });
 
-Here's the timelines of possible execution.
+Let's see what this code does:
 
-Let's state what this code does:
-
- * CB is always added to `volusionDocReadyMethods`
- * The members of `volusionDocReadyMethods` always get called
+ * A callback, CB is always added to `volusionDocReadyMethods`.
+ * The members of `volusionDocReadyMethods` always get called.
  * BUT CB is NOT always added BEFORE the methods get called.
 
 Therefore, CB can register AFTER the methods are called, and
-thus is never run.
+thus may never run.
 
-This is where honest and well-intended implementations of `.ready()` can break as seen for a client of mine.
+This is where honest and well-intended implementations of `.ready()` can break.
 
-Some could blame the implementer of CB as the culprit here.
-
-However, wouldn't it be better if the `.ready()` implementation was robust enough to not take issue with this? Fragile foundations are hardly worth using at all.  Let's do better.
+Wouldn't it be better if the `.ready()` implementation was robust enough to not take issue with this? Fragile foundations are hardly worth using at all.  Let's do better.
 
 ## Example Usage
 
@@ -182,8 +178,8 @@ it will define `dbg` in the global namespace.  Pretend the code is at `//example
 
 There are very cathedral ways of doing this ... but let's not do that.
 
-Also note that this method won't load a script if the object you are looking for is defined.  If the functionality was
-brought in elsewhere, this thing isn't stupid enough that it needs its own copy to consider it "loaded".
+> Note: This method **won't** load a script if the object you are looking for is defined.  If the functionality was
+brought in elsewhere, this thing isn't stupid enough to need its own copy to consider it "loaded".
 
 ## Implementation
 
