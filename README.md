@@ -9,7 +9,7 @@ Instead, there's a description of each function, what it does, and then a multi 
 
 > Note 1: The one-line version is intentionally *not* "minified" or obfuscated ... it's intended to be a readable variation of the multi-line that fits in one line.
 
-> Note 2: This README is valid javascript.  Really, if you want to you can just include it as a script ... that's why the "stray" comments are peppered around.
+> Note 2: This README is valid javascript.  Really, if you want to you can just include it as a script ... that's why the "stray" comments are peppered around. In fact, the test suite includes this readme file.
 
 **Every helper is self-contained. No function depends on any other function in the 'library.'**
 
