@@ -350,7 +350,11 @@ for future you and in violation of the principle of this library.  However, feel
 
 
 <a name='wrap'></a>
-# Wrap
+# wrap
+
+## Purpose
+
+## Example Usage
 
 **Multi-line**
 */
