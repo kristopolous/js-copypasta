@@ -35,7 +35,7 @@ Let's get started
   * <a href='#multi'>multi</a> - runs multiple functions through a single assignment
   * <a href='#chain'>chain</a> - cascades the return values of multiple functions with a single assignment
   * <a href='#once'>once</a> - makes sure that a function is run only once
-  * <a href='#wrap'>wrap</a> - wraps a function in a middleware
+  * <a href='#wrapfn'>wrapfn</a> - wraps a function in a middleware
 
 <a name='addtrigger'></a>
 # addTrigger
@@ -349,8 +349,8 @@ for future you and in violation of the principle of this library.  However, feel
     function once(fn){var _fn=self[fn]; return self[fn]=function(){self[fn]=function(){return _fn;}; return _fn=_fn.apply(this, arguments);}; }
 
 
-<a name='wrap'></a>
-# wrap
+<a name='wrapfn'></a>
+# wrapfn
 
 ## Purpose
 
@@ -368,22 +368,22 @@ If you have a function, say
 
 You can do
 
-    wrap('cat.init');
+    wrapfn('cat.init');
 
 With no callbacks to console.log ... or you can specify your own callbacks.  If you want multiple callbacks, then there's other tools in this document, such as multi, that you can include to do that.
 
 **Multi-line**
 */
 
-    function wrap(what, cb) {
-      if(!wrap[what]) {
+    function wrapfn(what, cb) {
+      if(!wrapfn[what]) {
         cb = cb || function(args) { console.log(what, args) };
-        wrap[what] = eval(what);
+        wrapfn[what] = eval(what);
 
         eval(what + '=' + (function(){
           var args = Array.prototype.slice.call(arguments);
           cb(args);
-          wrap[what].apply(this, args);
+          wrapfn[what].apply(this, args);
         }));
       }
     }
@@ -391,5 +391,5 @@ With no callbacks to console.log ... or you can specify your own callbacks.  If 
 /*
 **Single-line**
 
-    function wrap(what,cb){if(!wrap[what]){cb=cb || function(args){console.log(what,args)}; wrap[what]=eval(what); eval(what+'='+(function(){var args=Array.prototype.slice.call(arguments); cb(args); wrap[what].apply(this, args); })); } }
+    function wrapfn(what,cb){if(!wrapfn[what]){cb=cb || function(args){console.log(what,args)}; wrapfn[what]=eval(what); eval(what+'='+(function(){var args=Array.prototype.slice.call(arguments); cb(args); wrapfn[what].apply(this, args); })); } }
 */
