@@ -347,4 +347,29 @@ for future you and in violation of the principle of this library.  However, feel
 **Single-line**
 
     function once(fn){var _fn=self[fn]; return self[fn]=function(){self[fn]=function(){return _fn;}; return _fn=_fn.apply(this, arguments);}; }
+
+
+<a name='wrap'></a>
+# Wrap
+
+**Multi-line**
+*/
+
+    function wrap(what, cb) {
+      if(!wrap[what]) {
+        cb = cb || function(args) { console.log(what, args) };
+        wrap[what] = eval(what);
+
+        eval(what + '=' + (function(){
+          var args = Array.prototype.slice.call(arguments);
+          cb(args);
+          wrap[what].apply(this, args);
+        }));
+      }
+    }
+
+/*
+**Single-line**
+
+    function wrap(what, cb) { if(!wrap[what]) { cb = cb || function(args) { console.log(what, args) }; wrap[what] = eval(what); eval(what + '=' + (function(){ var args = Array.prototype.slice.call(arguments); cb(args); wrap[what].apply(this, args); })); } }
 */
