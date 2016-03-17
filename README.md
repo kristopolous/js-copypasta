@@ -35,6 +35,7 @@ Let's get started
   * <a href='#multi'>multi</a> - runs multiple functions through a single assignment
   * <a href='#chain'>chain</a> - cascades the return values of multiple functions with a single assignment
   * <a href='#once'>once</a> - makes sure that a function is run only once
+  * <a href='#wrap'>wrap</a> - wraps a function in a middleware
 
 <a name='addtrigger'></a>
 # addTrigger
