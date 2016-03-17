@@ -354,7 +354,23 @@ for future you and in violation of the principle of this library.  However, feel
 
 ## Purpose
 
+At the console you can use this to wrap around a function name specified by a string in order to see when its run and what
+arguments its run with.  As it turns out, some of the browser debuggers are buggy and broken ... this makes it simple to log
+things and interact with the site at the same time.
+
 ## Example Usage
+
+If you have a function, say 
+
+    var cat = {
+      init: function() { ... }
+    }
+
+You can do
+
+    wrap('cat.init');
+
+With no callbacks to console.log ... or you can specify your own callbacks.  If you want multiple callbacks, then there's other tools in this document, such as multi, that you can include to do that.
 
 **Multi-line**
 */
